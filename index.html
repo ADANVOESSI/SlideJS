@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://unsplash.it/32/32" type="image/x-icon">
+    <!-- <link rel="stylesheet" href="./css/index.css"> -->
+    <script src="https://kit.fontawesome.com/b48549a02e.js" crossorigin="anonymous"></script>
+    <title>TodoApp</title>
+    <script src="./vue.global.js"></script>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="header-container">
+            <h1>My Todo App</h1>
+            <form action="#" v-on:submit.prenvent="ajouter">
+                <div class="searchbar">
+                    <input v-model="valeur" type="text" name="search" id="search">
+                    <span>{{ valeur }}</span>
+                    <button type="submit" class="search-btn">Ajouter</button>
+                </div>
+            </form>
+        </div>
+        <ul id="tasklist">
+            <!-- To be filled by JavaScript -->
+            <li class="task-item" v-for="todo in maList" :key="todo.id">
+                {{ todo.text }}
+                <i class="fas fa-trash" v-on:click="delet(todo)"></i>
+            </li>
+        </ul>
+    </div>
+
+    <!-- <script src="./js/script.js"></script> -->
+
+    <script>
+        let id = 0;
+        const vue = Vue.createApp({
+            data(){
+                return {
+                    increment:0,
+                    maList: [
+                        {id: id++ , text:'J\'apprend du JS'}
+                    ],
+                    valeur : '',
+                }
+            },
+            methods:{
+                ajouter(){
+                        this.maList.unshift({id: id++ , text:this.valeur});
+                        this.valeur = ' ';
+                },
+                incremente(){
+                    this.increment++;
+                },
+                delet(obj){
+                        this.maList = this.maList.filter((el) => el !== obj);
+                        
+                    }
+            },
+            watch:{
+                valeur(newVal, ancVal){
+                    // console.log('L\'ancienne tâche est :' + ancVal + 'et la nouvelle tâche est : ' + newVal);
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
